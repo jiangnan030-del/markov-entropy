@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it and Perrone's paper."
+title: "markov-entropy"
+type: software
+authors:
+  - given-names: jiangnan
+repository-code: "https://github.com/jiangnan030-del/markov-entropy"
+version: 0.1.0
+date-released: 2026-08-24
+license: MIT
+references:
+  - type: article
+    title: "Markov Categories and Entropy"
+    authors:
+      - family-names: Perrone
+        given-names: Paolo
