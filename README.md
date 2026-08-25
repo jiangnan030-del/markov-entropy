@@ -1,5 +1,7 @@
 # markov-entropy
 
+![cover](docs/cover.png)
+
 [![CI](https://github.com/jiangnan030-del/markov-entropy/actions/workflows/ci.yml/badge.svg)](https://github.com/jiangnan030-del/markov-entropy/actions/workflows/ci.yml)
 
 An executable implementation of the finite-state constructions in Paolo Perrone's **Markov Categories and Entropy**.
