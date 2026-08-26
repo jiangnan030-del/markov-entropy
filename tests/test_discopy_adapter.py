@@ -1,10 +1,10 @@
 import numpy as np
 import pytest
 
-pytest.importorskip("discopy")
-
 from markov_entropy import Channel, Distribution, FiniteSpace
 from markov_entropy.adapters import DiscopyAdapter
+
+pytest.importorskip("discopy")
 
 
 def make_objects():
