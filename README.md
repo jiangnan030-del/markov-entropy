@@ -42,14 +42,22 @@
 
 ## Installation
 
+After the first trusted PyPI publication:
+
 ```bash
-pip install markov-entropy
+pip install markov-entropy==0.3.0
 ```
 
 Install string-diagram support:
 
 ```bash
-pip install "markov-entropy[discopy]"
+pip install "markov-entropy[discopy]==0.3.0"
+```
+
+Until then, install the tagged source release:
+
+```bash
+pip install "markov-entropy[discopy] @ git+https://github.com/jiangnan030-del/markov-entropy.git@v0.3.0"
 ```
 
 For development:
@@ -116,6 +124,7 @@ The experimental namespace also provides finite-partition lower-bound sequences 
 - [DisCoPy adapter](docs/discopy-adapter.md)
 - [Diagram gallery](docs/diagram-gallery.md)
 - [Experimental Stoch backends](docs/stoch-experimental.md)
+- [PyPI publishing](docs/publishing.md)
 - [Changelog](CHANGELOG.md)
 
 ## Validation
@@ -137,6 +146,7 @@ uv build
 - [x] Optional DisCoPy adapter
 - [x] Reproducible SVG diagram gallery and visual notebook
 - [x] Initial experimental density, partition, and sampling interfaces
+- [x] PyPI Trusted Publishing workflow
 - [ ] Domain-specific integrators, essential suprema, dependent-sample errors, and measurable kernels
 
 ## Citation
