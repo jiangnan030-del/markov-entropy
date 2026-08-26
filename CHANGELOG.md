@@ -4,12 +4,21 @@ All notable changes to this project are documented here. The format follows Keep
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-08-26
+
 ### Added
 
-- Experimental density divergences with a user-supplied common-base-measure integrator.
-- Finite-partition divergence lower-bound sequences with monotonicity diagnostics.
-- Monte Carlo expectation and KL estimators with standard errors and confidence intervals.
-- Explicit documentation and notebook for assumptions, uncertainty, and non-goals.
+- Experimental `markov_entropy.stoch` namespace isolated from the stable FinStoch API.
+- Density KL, finite-order Rényi, and total-variation divergences with a user-supplied common-base-measure integrator.
+- Finite-partition divergence lower-bound sequences with labels and monotonicity diagnostics.
+- Monte Carlo expectation and KL estimators with standard errors and normal-approximation confidence intervals.
+- Sixth executable notebook demonstrating quadrature, partition sequences, and sampling uncertainty.
+- Experimental Stoch documentation covering assumptions, limitations, and non-goals.
+
+### Changed
+
+- README and API documentation now distinguish the stable finite core from experimental general-space calculations.
+- Numerical conventions now document density, partition, and sampling assumptions explicitly.
 
 ## [0.2.0] - 2026-08-26
 
@@ -43,6 +52,7 @@ All notable changes to this project are documented here. The format follows Keep
 - Package build and wheel-install smoke test in CI.
 - Contribution guidance and GitHub issue/PR templates.
 
-[Unreleased]: https://github.com/jiangnan030-del/markov-entropy/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/jiangnan030-del/markov-entropy/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/jiangnan030-del/markov-entropy/releases/tag/v0.3.0
 [0.2.0]: https://github.com/jiangnan030-del/markov-entropy/releases/tag/v0.2.0
 [0.1.0]: https://github.com/jiangnan030-del/markov-entropy/releases/tag/v0.1.0

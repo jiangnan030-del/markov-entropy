@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "markov-entropy"
-version = "0.2.0"
-description = "Finite Markov categories, divergences, mutual information, entropy, and string diagrams in Python."
+version = "0.3.0"
+description = "Finite Markov categories and experimental density, partition, and sampling information calculations."
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}

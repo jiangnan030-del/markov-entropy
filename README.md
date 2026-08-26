@@ -5,14 +5,14 @@
 <h1 align="center">markov-entropy</h1>
 
 <p align="center">
-  <strong>Finite Markov categories, information quantities, and string diagrams in Python.</strong>
+  <strong>Finite Markov categories and experimental general-space information calculations in Python.</strong>
 </p>
 
 <p align="center">
   <a href="https://github.com/jiangnan030-del/markov-entropy/actions/workflows/ci.yml"><img src="https://github.com/jiangnan030-del/markov-entropy/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/version-0.2.0-blue" alt="Version 0.2.0">
+  <img src="https://img.shields.io/badge/version-0.3.0-blue" alt="Version 0.3.0">
 </p>
 
 <p align="center">
@@ -24,9 +24,9 @@
 
 ## Overview
 
-`markov-entropy` models **FinStoch** with finite spaces and column-stochastic matrices. Version 0.2 adds an optional DisCoPy layer for symbolic Markov string diagrams while keeping all numerical evaluation in the lightweight NumPy core.
+`markov-entropy` models **FinStoch** with finite spaces and column-stochastic matrices. Version 0.2 added an optional DisCoPy layer for symbolic Markov string diagrams. Version 0.3 adds explicitly experimental density, finite-partition, and sampling calculations while keeping the stable finite API unchanged.
 
-> **Scope.** Finite state spaces are the stable core. Experimental density, partition, and sampling calculations live under `markov_entropy.stoch`; they do not constitute a full implementation of general measurable spaces or differential entropy.
+> **Scope.** Finite state spaces are the stable core. Experimental calculations live under `markov_entropy.stoch`; they do not constitute a full implementation of general measurable spaces, arbitrary kernels, Radon–Nikodym derivatives, exact partition suprema, or differential entropy.
 
 ## Highlights
 
@@ -35,7 +35,9 @@
 - KL, Rényi, and total-variation divergences.
 - Mutual information, conditional mutual information, entropy, and conditional entropy.
 - Optional DisCoPy boxes and string diagrams for categorical constructions.
-- Experimental density, finite-partition, and Monte Carlo backends with explicit assumptions.
+- Experimental density divergences using a caller-supplied common-base-measure integrator.
+- Finite-partition lower-bound sequences with monotonicity diagnostics.
+- Monte Carlo expectation and KL estimates with standard errors and confidence intervals.
 - Reproducible SVG gallery, six notebooks, theorem tests, and Python 3.11–3.13 CI.
 
 ## Installation
