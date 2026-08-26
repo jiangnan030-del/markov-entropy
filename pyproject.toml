@@ -4,15 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "markov-entropy"
-version = "0.1.0"
-description = "Finite Markov categories, divergences, mutual information, and entropy in Python."
+version = "0.2.0"
+description = "Finite Markov categories, divergences, mutual information, entropy, and string diagrams in Python."
 readme = "README.md"
 requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [{name = "jiangnan"}]
-keywords = ["markov-categories", "information-theory", "entropy", "probability"]
+keywords = ["markov-categories", "information-theory", "entropy", "probability", "string-diagrams"]
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 4 - Beta",
   "Intended Audience :: Science/Research",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
@@ -34,6 +34,8 @@ discopy = ["discopy==1.2.2"]
 
 [project.urls]
 Repository = "https://github.com/jiangnan030-del/markov-entropy"
+Documentation = "https://github.com/jiangnan030-del/markov-entropy/tree/main/docs"
+Changelog = "https://github.com/jiangnan030-del/markov-entropy/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/markov_entropy"]
