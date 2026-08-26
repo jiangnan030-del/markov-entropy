@@ -42,6 +42,12 @@
 Requires Python 3.11 or newer.
 
 ```bash
+pip install markov-entropy
+```
+
+Or from source:
+
+```bash
 git clone https://github.com/jiangnan030-del/markov-entropy.git
 cd markov-entropy
 pip install -e .
