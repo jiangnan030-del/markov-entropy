@@ -1,5 +1,6 @@
 import numpy as np
-from hypothesis import given, settings, strategies as st
+from hypothesis import given, settings
+from hypothesis import strategies as st
 
 from markov_entropy import Channel, Distribution, FiniteSpace, entropy, mutual_information
 from markov_entropy.divergences import (
