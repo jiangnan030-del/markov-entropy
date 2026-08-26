@@ -26,7 +26,7 @@
 
 `markov-entropy` models **FinStoch** with finite spaces and column-stochastic matrices. Version 0.2 adds an optional DisCoPy layer for symbolic Markov string diagrams while keeping all numerical evaluation in the lightweight NumPy core.
 
-> **Scope.** Finite state spaces are supported. General measurable spaces (`Stoch`) and differential entropy remain out of scope.
+> **Scope.** Finite state spaces are the stable core. Experimental density, partition, and sampling calculations live under `markov_entropy.stoch`; they do not constitute a full implementation of general measurable spaces or differential entropy.
 
 ## Highlights
 
@@ -35,7 +35,8 @@
 - KL, Rényi, and total-variation divergences.
 - Mutual information, conditional mutual information, entropy, and conditional entropy.
 - Optional DisCoPy boxes and string diagrams for categorical constructions.
-- Reproducible SVG gallery, five notebooks, theorem tests, and Python 3.11–3.13 CI.
+- Experimental density, finite-partition, and Monte Carlo backends with explicit assumptions.
+- Reproducible SVG gallery, six notebooks, theorem tests, and Python 3.11–3.13 CI.
 
 ## Installation
 
@@ -89,7 +90,21 @@ Render the complete SVG gallery:
 uv run python examples/render_discopy_gallery.py
 ```
 
-See the [diagram gallery](docs/diagram-gallery.md), [adapter guide](docs/discopy-adapter.md), and [visual notebook](examples/05_discopy_diagrams.ipynb).
+## Experimental Stoch calculations
+
+```python
+import math
+
+from markov_entropy.stoch import DensityDistribution, density_kl
+
+p = DensityDistribution(lambda _: 0.0, "uniform")
+q = DensityDistribution(lambda x: math.log(x + 0.5), "tilted")
+
+# The caller explicitly supplies the domain and quadrature rule.
+value = density_kl(p, q, integrator)
+```
+
+The experimental namespace also provides finite-partition lower-bound sequences and Monte Carlo estimates with reported uncertainty. See the [experimental Stoch guide](docs/stoch-experimental.md) and [notebook](examples/06_stoch_experimental.ipynb).
 
 ## Documentation
 
@@ -98,6 +113,7 @@ See the [diagram gallery](docs/diagram-gallery.md), [adapter guide](docs/discopy
 - [Formula-to-code map](docs/formula-map.md)
 - [DisCoPy adapter](docs/discopy-adapter.md)
 - [Diagram gallery](docs/diagram-gallery.md)
+- [Experimental Stoch backends](docs/stoch-experimental.md)
 - [Changelog](CHANGELOG.md)
 
 ## Validation
@@ -118,7 +134,8 @@ uv build
 - [x] Paper-theorem and property-based validation
 - [x] Optional DisCoPy adapter
 - [x] Reproducible SVG diagram gallery and visual notebook
-- [ ] Experimental density, partition, and sampling backends for selected `Stoch` problems
+- [x] Initial experimental density, partition, and sampling interfaces
+- [ ] Domain-specific integrators, essential suprema, dependent-sample errors, and measurable kernels
 
 ## Citation
 
