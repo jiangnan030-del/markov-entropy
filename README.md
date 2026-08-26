@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/cover.png" alt="Markov Entropy — Finite Markov Categories in Python" width="100%">
+  <img src="docs/cover.jpg" alt="Markov Entropy — Finite Markov Categories in Python" width="100%">
 </p>
 
 <h1 align="center">markov-entropy</h1>
