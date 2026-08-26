@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format follows Keep
 
 ## [Unreleased]
 
+### Added
+
+- Experimental density divergences with a user-supplied common-base-measure integrator.
+- Finite-partition divergence lower-bound sequences with monotonicity diagnostics.
+- Monte Carlo expectation and KL estimators with standard errors and confidence intervals.
+- Explicit documentation and notebook for assumptions, uncertainty, and non-goals.
+
 ## [0.2.0] - 2026-08-26
 
 ### Added
