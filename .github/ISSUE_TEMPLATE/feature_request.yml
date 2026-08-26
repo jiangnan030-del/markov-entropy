@@ -1,0 +1,24 @@
+name: Feature request
+description: Propose a focused mathematical or engineering capability
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      description: Which research or software workflow needs this feature?
+    validations:
+      required: true
+  - type: textarea
+    id: definition
+    attributes:
+      label: Mathematical definition or API
+      description: State the proposed inputs, outputs, assumptions, and references.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Acceptance tests
+      description: Which identities, edge cases, or benchmarks should pass?
