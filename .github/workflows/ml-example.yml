@@ -1,0 +1,41 @@
+name: XGBoost Iris example
+
+on:
+  push:
+    paths:
+      - "examples/xgboost_iris_evaluation.py"
+      - "docs/xgboost-iris-evaluation.md"
+      - ".github/workflows/ml-example.yml"
+      - "src/**"
+  pull_request:
+    paths:
+      - "examples/xgboost_iris_evaluation.py"
+      - "docs/xgboost-iris-evaluation.md"
+      - ".github/workflows/ml-example.yml"
+      - "src/**"
+  workflow_dispatch:
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - run: uv python install 3.12
+      - name: Run XGBoost Iris evaluation
+        run: >-
+          uv run --python 3.12
+          --with "scikit-learn>=1.5"
+          --with "xgboost>=2.1"
+          python examples/xgboost_iris_evaluation.py
+      - name: Verify generated artifacts
+        run: |
+          test -s build/xgboost-iris/metrics.json
+          test -s build/xgboost-iris/probability_channel.csv
+          test -s build/xgboost-iris/test_predictions.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: xgboost-iris-evaluation
+          path: build/xgboost-iris
