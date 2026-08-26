@@ -4,16 +4,21 @@ All notable changes to this project are documented here. The format follows Keep
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-26
+
 ### Added
 
 - Optional DisCoPy 1.2.2 adapter for symbolic finite Markov string diagrams.
-- Symbolic channel, state, copy, discard, composition, and tensor constructions.
-- Diagram pairs for entropy, channel entropy, mutual information, and conditional-output independence.
-- Executable DisCoPy notebook, adapter documentation, and CI-tested optional dependency.
-- API and numerical-conventions documentation.
-- Property tests for KL chain rule, enriched composition/tensor bounds, copy/discard laws, and conditional information identities.
-- Package build and wheel-install smoke test in CI.
-- Contribution guidance and GitHub issue/PR templates.
+- Symbolic state and channel boxes, copy, discard, composition, and tensor diagrams.
+- Diagram comparisons for state entropy, channel entropy, mutual information, and conditional-output independence.
+- Reproducible SVG gallery renderer and downloadable CI gallery artifact.
+- Expanded visual notebook linking categorical diagrams to numerical entropy and mutual information.
+- DisCoPy adapter documentation and diagram gallery.
+
+### Changed
+
+- Project status advanced from alpha to beta.
+- Package description and documentation links now include string-diagram support.
 
 ## [0.1.0] - 2026-08-26
 
@@ -26,6 +31,11 @@ All notable changes to this project are documented here. The format follows Keep
 - Log-domain Rényi evaluation with stable behavior near `alpha = 1` and extreme probabilities.
 - BSC, BEC, XOR, data-processing, tensor-additivity, and Hypothesis property tests.
 - Four executable notebooks, formula map, README example test, uv lockfile, and Python 3.11–3.13 CI.
+- API and numerical-conventions documentation.
+- Property tests for KL chain rule, enriched composition/tensor bounds, copy/discard laws, and conditional information identities.
+- Package build and wheel-install smoke test in CI.
+- Contribution guidance and GitHub issue/PR templates.
 
-[Unreleased]: https://github.com/jiangnan030-del/markov-entropy/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/jiangnan030-del/markov-entropy/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/jiangnan030-del/markov-entropy/releases/tag/v0.2.0
 [0.1.0]: https://github.com/jiangnan030-del/markov-entropy/releases/tag/v0.1.0

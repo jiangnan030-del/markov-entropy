@@ -44,6 +44,22 @@ jobs:
       - run: uv run pytest --nbval examples/ -p no:cacheprovider --override-ini="addopts="
       - run: uv run pytest tests/test_readme_doctest.py --override-ini="addopts="
 
+  diagrams:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - run: uv python install 3.12
+      - run: uv sync --all-extras
+      - run: uv run python examples/render_discopy_gallery.py --output build/diagrams
+      - run: test "$(find build/diagrams -name '*.svg' | wc -l)" -eq 13
+      - uses: actions/upload-artifact@v4
+        with:
+          name: discopy-diagram-gallery
+          path: build/diagrams
+
   package:
     runs-on: ubuntu-latest
     steps:
