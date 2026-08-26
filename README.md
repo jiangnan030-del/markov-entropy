@@ -12,7 +12,7 @@
   <a href="https://github.com/jiangnan030-del/markov-entropy/actions/workflows/ci.yml"><img src="https://github.com/jiangnan030-del/markov-entropy/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/python-3.11%2B-3776AB?logo=python&logoColor=white" alt="Python 3.11+">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/status-alpha-orange" alt="Alpha status">
+  <img src="https://img.shields.io/badge/status-v0.2%20development-blue" alt="v0.2 development">
 </p>
 
 <p align="center">
@@ -26,7 +26,7 @@
 
 `markov-entropy` models **FinStoch** with finite spaces and column-stochastic matrices. It connects categorical probability with executable numerical objects, making the paper's constructions available for experiments, regression tests, and reproducible research.
 
-> **Scope.** Version `0.1.0` focuses on finite state spaces. General measurable spaces (`Stoch`) and differential entropy are deliberately out of scope rather than approximated implicitly.
+> **Scope.** Version `0.1.0` provides the stable finite-state numerical core. Version `0.2` adds an optional symbolic DisCoPy layer. General measurable spaces (`Stoch`) and differential entropy remain out of scope.
 
 ## Highlights
 
@@ -34,8 +34,8 @@
 - **Markov-category operations** — identity, composition, tensor product, copy, discard, joints, and marginals.
 - **Divergences** — KL, Rényi (including `α = 0, 1, ∞`), and total variation.
 - **Information quantities** — mutual information, conditional mutual information, entropy, and conditional entropy induced by divergences.
-- **Structural checks** — determinism, independence, almost-sure equality, and data-processing regressions.
-- **Reproducible examples** — four notebooks, a runnable demo, formula-to-code notes, tests, and multi-version CI.
+- **Symbolic diagrams** — optional DisCoPy boxes and string diagrams for categorical constructions.
+- **Reproducible examples** — five notebooks, a runnable demo, formula-to-code notes, tests, and multi-version CI.
 
 ## Installation
 
@@ -45,32 +45,25 @@ Requires Python 3.11 or newer.
 pip install markov-entropy
 ```
 
+Install the optional DisCoPy adapter:
+
+```bash
+pip install "markov-entropy[discopy]"
+```
+
 Or from source:
 
 ```bash
 git clone https://github.com/jiangnan030-del/markov-entropy.git
 cd markov-entropy
-pip install -e .
+pip install -e ".[discopy]"
 ```
 
-For development (using [uv](https://docs.astral.sh/uv/)):
+For development with uv:
 
 ```bash
-uv sync
+uv sync --all-extras
 uv run pytest
-```
-
-Or with pip:
-
-```bash
-pip install -e '.[dev]'
-pytest
-```
-
-For the example notebooks:
-
-```bash
-pip install -e '.[notebooks]'
 ```
 
 ## Quick start
@@ -92,31 +85,32 @@ assert renyi == shannon
 assert gini_simpson == 1 - (0.25**2 + 0.75**2)
 ```
 
-## Matrix convention
+## DisCoPy diagrams
 
-A channel `f: X → Y` has shape `(len(Y), len(X))`, with
+```python
+from markov_entropy import Channel, FiniteSpace
+from markov_entropy.adapters import DiscopyAdapter
 
-```text
-f.matrix[y, x] = P(y | x)
+X = FiniteSpace([0, 1])
+Y = FiniteSpace(["a", "b"])
+f = Channel(X, Y, [[0.8, 0.1], [0.2, 0.9]])
+
+adapter = DiscopyAdapter({X: "X", Y: "Y"})
+diagram = adapter.channel_box(f, "f")
 ```
 
-Every **column** sums to one, matching the convention used in the paper. Composition is ordinary matrix multiplication: `g.compose(f)` represents `g ∘ f`.
+See [`docs/discopy-adapter.md`](docs/discopy-adapter.md) and [`05_discopy_diagrams.ipynb`](examples/05_discopy_diagrams.ipynb).
 
-## Mathematical correspondence
+## Matrix convention
 
-| Paper construction | Python API |
-|---|---|
-| Source `p: I → X` | `Distribution(X, probabilities)` |
-| Channel `f: X → Y` | `Channel(X, Y, matrix)` |
-| Composition `g ∘ f` | `g.compose(f)` |
-| Tensor product `f ⊗ h` | `f.tensor(h)` |
-| Copy / discard | `copy(X)` / `discard(X)` |
-| Joint state `fp` | `joint(p, f)` |
-| `maxₓ D(fₓ ‖ gₓ)` | `channel_divergence(f, g, D)` |
-| `D(pXY ‖ pX ⊗ pY)` | `mutual_information(pXY, D)` |
-| Departure from determinism | `entropy(p_or_f, D)` |
+A channel `f: X → Y` has shape `(len(Y), len(X))`, with `f.matrix[y, x] = P(y | x)`. Every column sums to one, matching the paper. `g.compose(f)` represents `g ∘ f`.
 
-Natural logarithms are used, so information is measured in **nats**. See [`docs/formula-map.md`](docs/formula-map.md) for the formula-to-code index.
+## Documentation
+
+- [API reference](docs/api.md)
+- [Numerical conventions](docs/conventions.md)
+- [Formula-to-code map](docs/formula-map.md)
+- [DisCoPy adapter](docs/discopy-adapter.md)
 
 ## Examples
 
@@ -126,33 +120,20 @@ Natural logarithms are used, so information is measured in **nats**. See [`docs/
 | [`02_divergences.ipynb`](examples/02_divergences.ipynb) | KL, Rényi, and total-variation divergences |
 | [`03_mutual_information.ipynb`](examples/03_mutual_information.ipynb) | Joint distributions and mutual information |
 | [`04_entropy_from_determinism.ipynb`](examples/04_entropy_from_determinism.ipynb) | Entropy as departure from determinism |
-
-Run the lightweight script directly:
-
-```bash
-uv sync
-uv run pytest
-uv run pytest --nbval examples/
-uv run python examples/basic_demo.py
-```
-
-Or with pip:
-
-```bash
-python -m pytest
-python examples/basic_demo.py
-```
+| [`05_discopy_diagrams.ipynb`](examples/05_discopy_diagrams.ipynb) | Symbolic Markov string diagrams |
 
 ## Development
 
 ```bash
-ruff check .
-mypy src/markov_entropy
-pytest
-python examples/basic_demo.py
+uv sync --all-extras
+uv run ruff check .
+uv run mypy src/markov_entropy
+uv run pytest
+uv run pytest --nbval examples/ -p no:cacheprovider --override-ini="addopts="
+uv build
 ```
 
-GitHub Actions runs these checks on Python 3.11, 3.12, and 3.13.
+GitHub Actions tests Python 3.11, 3.12, and 3.13.
 
 ## Roadmap
 
@@ -160,7 +141,8 @@ GitHub Actions runs these checks on Python 3.11, 3.12, and 3.13.
 - [x] KL, Rényi, and total-variation divergences
 - [x] Divergence-induced mutual information and entropy
 - [x] Tests, notebooks, formula map, and CI
-- [ ] Optional DisCoPy adapter and string-diagram visualization
+- [x] Optional DisCoPy adapter and symbolic string-diagram layer
+- [ ] Rendered diagram gallery and richer visual notebook narrative
 - [ ] Explicit experimental backends for selected `Stoch` computations
 
 ## Citation
