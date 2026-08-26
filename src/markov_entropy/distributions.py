@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass
-from typing import Iterable
 
 import numpy as np
 import numpy.typing as npt
@@ -24,7 +24,7 @@ class Distribution:
         object.__setattr__(self, "probabilities", probability_vector(probabilities, len(space)))
 
     @classmethod
-    def product(cls, *distributions: "Distribution") -> "Distribution":
+    def product(cls, *distributions: Distribution) -> Distribution:
         if not distributions:
             raise ValueError("at least one distribution is required")
         result = distributions[0]
@@ -32,13 +32,13 @@ class Distribution:
             result = result.tensor(distribution)
         return result
 
-    def tensor(self, other: "Distribution") -> "Distribution":
+    def tensor(self, other: Distribution) -> Distribution:
         return Distribution(
             self.space.tensor(other.space),
             np.kron(self.probabilities, other.probabilities),
         )
 
-    def marginal(self, axes: int | Iterable[int]) -> "Distribution":
+    def marginal(self, axes: int | Iterable[int]) -> Distribution:
         selected = (axes,) if isinstance(axes, int) else tuple(axes)
         factors = self.space.factors
         if not selected:
@@ -59,5 +59,5 @@ class Distribution:
             space = space.tensor(factors[axis])
         return Distribution(space, np.asarray(values).reshape(-1))
 
-    def __matmul__(self, other: "Distribution") -> "Distribution":
+    def __matmul__(self, other: Distribution) -> Distribution:
         return self.tensor(other)

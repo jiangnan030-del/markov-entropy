@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 .pytest_cache/
 .coverage
+.coverage.*
 htmlcov/
 .mypy_cache/
 .ruff_cache/
@@ -10,3 +11,4 @@ dist/
 build/
 *.egg-info/
 .ipynb_checkpoints/
+.nbval_cache/

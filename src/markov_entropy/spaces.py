@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Hashable, Iterable
 from dataclasses import dataclass, field
 from itertools import product
-from typing import Hashable, Iterable
 
 
 @dataclass(frozen=True)
@@ -16,12 +16,12 @@ class FiniteSpace:
     """
 
     labels: tuple[Hashable, ...]
-    components: tuple["FiniteSpace", ...] = field(default=(), repr=False)
+    components: tuple[FiniteSpace, ...] = field(default=(), repr=False)
 
     def __init__(
         self,
         labels: Iterable[Hashable],
-        components: tuple["FiniteSpace", ...] = (),
+        components: tuple[FiniteSpace, ...] = (),
     ) -> None:
         values = tuple(labels)
         if not values:
@@ -35,19 +35,19 @@ class FiniteSpace:
         return len(self.labels)
 
     @property
-    def factors(self) -> tuple["FiniteSpace", ...]:
+    def factors(self) -> tuple[FiniteSpace, ...]:
         return self.components or (self,)
 
     @property
     def shape(self) -> tuple[int, ...]:
         return tuple(len(component) for component in self.factors)
 
-    def tensor(self, other: "FiniteSpace") -> "FiniteSpace":
+    def tensor(self, other: FiniteSpace) -> FiniteSpace:
         components = self.factors + other.factors
         labels = tuple(product(*(component.labels for component in components)))
         return FiniteSpace(labels, components=components)
 
-    def __matmul__(self, other: "FiniteSpace") -> "FiniteSpace":
+    def __matmul__(self, other: FiniteSpace) -> FiniteSpace:
         return self.tensor(other)
 
 

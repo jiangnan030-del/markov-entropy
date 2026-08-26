@@ -34,23 +34,25 @@ class Channel:
             raise ValueError("source space does not match channel domain")
         return Distribution(self.codomain, self.matrix @ source.probabilities)
 
-    def compose(self, before: "Channel") -> "Channel":
+    def compose(self, before: Channel) -> Channel:
         """Return ``self ∘ before``."""
         if before.codomain != self.domain:
             raise ValueError("channel codomain/domain mismatch")
         return Channel(before.domain, self.codomain, self.matrix @ before.matrix)
 
-    def tensor(self, other: "Channel") -> "Channel":
+    def tensor(self, other: Channel) -> Channel:
         return Channel(
             self.domain.tensor(other.domain),
             self.codomain.tensor(other.codomain),
             np.kron(self.matrix, other.matrix),
         )
 
-    def marginal(self, axes: int | tuple[int, ...]) -> "Channel":
+    def marginal(self, axes: int | tuple[int, ...]) -> Channel:
         selected = (axes,) if isinstance(axes, int) else tuple(axes)
-        columns = [Distribution(self.codomain, self.matrix[:, i]).marginal(selected).probabilities
-                   for i in range(len(self.domain))]
+        columns = [
+            Distribution(self.codomain, self.matrix[:, i]).marginal(selected).probabilities
+            for i in range(len(self.domain))
+        ]
         codomain = Distribution(self.codomain, self.matrix[:, 0]).marginal(selected).space
         return Channel(self.domain, codomain, np.column_stack(columns))
 
@@ -60,5 +62,5 @@ class Channel:
         )
         return bool(np.all(zeros_or_ones) and np.allclose(self.matrix.sum(axis=0), 1.0))
 
-    def __matmul__(self, other: "Channel") -> "Channel":
+    def __matmul__(self, other: Channel) -> Channel:
         return self.tensor(other)

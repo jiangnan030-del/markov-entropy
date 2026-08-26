@@ -42,7 +42,9 @@ def test_channel_entropy_and_conditionals():
     deterministic = Channel(x, x, np.eye(2))
     noisy = Channel(x, x, [[0.75, 0.25], [0.25, 0.75]])
     assert entropy(deterministic, KL()) == pytest.approx(0.0)
-    expected = 0.4 * shannon_entropy(Distribution(x, noisy.matrix[:, 0])) + 0.6 * shannon_entropy(Distribution(x, noisy.matrix[:, 1]))
+    h0 = shannon_entropy(Distribution(x, noisy.matrix[:, 0]))
+    h1 = shannon_entropy(Distribution(x, noisy.matrix[:, 1]))
+    expected = 0.4 * h0 + 0.6 * h1
     assert conditional_entropy(noisy, source, KL()) == pytest.approx(expected)
 
 

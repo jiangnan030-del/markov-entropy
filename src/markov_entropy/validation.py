@@ -19,7 +19,7 @@ def probability_vector(values: npt.ArrayLike, size: int) -> npt.NDArray[np.float
     array = np.maximum(array, 0.0)
     if not np.isclose(array.sum(), 1.0, atol=ATOL, rtol=0.0):
         raise ValueError("probabilities must sum to one")
-    array = array / array.sum()
+    array = np.asarray(array / array.sum(), dtype=np.float64)
     array.setflags(write=False)
     return array
 
@@ -38,6 +38,6 @@ def stochastic_matrix(
     sums = array.sum(axis=0)
     if not np.allclose(sums, 1.0, atol=ATOL, rtol=0.0):
         raise ValueError("every channel column must sum to one")
-    array = array / sums
+    array = np.asarray(array / sums, dtype=np.float64)
     array.setflags(write=False)
     return array

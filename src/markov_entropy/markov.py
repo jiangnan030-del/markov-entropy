@@ -6,7 +6,7 @@ import numpy as np
 
 from .channels import Channel
 from .distributions import Distribution
-from .spaces import FiniteSpace, UNIT
+from .spaces import UNIT, FiniteSpace
 from .validation import ATOL
 
 

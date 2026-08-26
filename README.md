@@ -47,7 +47,14 @@ cd markov-entropy
 pip install -e .
 ```
 
-For development and testing:
+For development (using [uv](https://docs.astral.sh/uv/)):
+
+```bash
+uv sync
+uv run pytest
+```
+
+Or with pip:
 
 ```bash
 pip install -e '.[dev]'
@@ -117,6 +124,16 @@ Natural logarithms are used, so information is measured in **nats**. See [`docs/
 Run the lightweight script directly:
 
 ```bash
+uv sync
+uv run pytest
+uv run pytest --nbval examples/
+uv run python examples/basic_demo.py
+```
+
+Or with pip:
+
+```bash
+python -m pytest
 python examples/basic_demo.py
 ```
 
