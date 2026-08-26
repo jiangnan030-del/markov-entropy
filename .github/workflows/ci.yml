@@ -43,3 +43,16 @@ jobs:
       - run: uv sync --all-extras
       - run: uv run pytest --nbval examples/ -p no:cacheprovider --override-ini="addopts="
       - run: uv run pytest tests/test_readme_doctest.py --override-ini="addopts="
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - run: uv python install 3.12
+      - run: uv build
+      - run: uv venv --python 3.12 .venv-wheel
+      - run: uv pip install --python .venv-wheel/bin/python dist/*.whl
+      - run: .venv-wheel/bin/python -c "import markov_entropy; print(markov_entropy.__doc__)"
