@@ -55,8 +55,13 @@ def probability_channel(
     counts = np.bincount(y_true, minlength=len(class_names)).astype(float)
     source = Distribution(label_space, counts / counts.sum())
     matrix = np.column_stack(
-        [probabilities[y_true == class_index].mean(axis=0) for class_index in range(len(class_names))]
+        [
+            probabilities[y_true == idx].mean(axis=0)
+            for idx in range(len(class_names))
+        ]
     )
+    # Renormalise columns to mitigate floating-point drift from XGBoost
+    matrix = matrix / matrix.sum(axis=0, keepdims=True)
     return source, Channel(label_space, label_space, matrix)
 
 
@@ -174,6 +179,8 @@ def main() -> None:
     )
     classifier.fit(x_train, y_train)
     probabilities = np.asarray(classifier.predict_proba(x_test), dtype=float)
+    # Normalise to mitigate XGBoost floating-point drift so rows sum to one
+    probabilities = probabilities / probabilities.sum(axis=1, keepdims=True)
 
     metrics, source, channel = evaluate(y_test, probabilities, class_names)
     write_artifacts(
