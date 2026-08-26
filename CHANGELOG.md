@@ -6,6 +6,10 @@ All notable changes to this project are documented here. The format follows Keep
 
 ### Added
 
+- Optional DisCoPy 1.2.2 adapter for symbolic finite Markov string diagrams.
+- Symbolic channel, state, copy, discard, composition, and tensor constructions.
+- Diagram pairs for entropy, channel entropy, mutual information, and conditional-output independence.
+- Executable DisCoPy notebook, adapter documentation, and CI-tested optional dependency.
 - API and numerical-conventions documentation.
 - Property tests for KL chain rule, enriched composition/tensor bounds, copy/discard laws, and conditional information identities.
 - Package build and wheel-install smoke test in CI.
