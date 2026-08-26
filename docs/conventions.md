@@ -31,6 +31,16 @@ Rényi divergence has explicit branches for orders `0`, `1`, and `∞`. Finite n
 
 `almost_sure_equal(f, g, p)` compares channel columns whose source mass exceeds the package tolerance. This is a numerical support convention: probabilities at or below `1e-12` are treated as absent.
 
+## Experimental general-space calculations
+
+The `markov_entropy.stoch` namespace uses explicit user-supplied assumptions:
+
+- density calculations require log-densities and an integrator for a shared base measure;
+- partition calculations require aligned probability masses and caller-verified refinement structure;
+- sampling calculations report normal-approximation uncertainty and assume independent samples.
+
+These functions are approximations or restricted calculations. They are not a full implementation of arbitrary measurable spaces, kernels, Radon–Nikodym derivatives, or differential entropy.
+
 ## Finite scope
 
-Version `0.1.0` implements `FinStoch` only. It does not identify categorical entropy on general measurable spaces with differential entropy. Continuous densities, Radon–Nikodym derivatives, partition suprema, and sampling estimators remain future experimental backends.
+The stable core implements `FinStoch`. Experimental v0.3 APIs live under `markov_entropy.stoch` and are deliberately separated from the finite categorical API.

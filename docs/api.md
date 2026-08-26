@@ -71,6 +71,35 @@ A custom divergence only needs to implement `__call__(first, second) -> float`.
 - `renyi_entropy(distribution, order)` — conventional finite Rényi entropy.
 - `gini_simpson(distribution)` — `1 - Σ p²`.
 
+## Optional DisCoPy adapter
+
+`markov_entropy.adapters.DiscopyAdapter` maps finite spaces and channels to symbolic Markov string diagrams. The numerical matrices remain in `markov_entropy`. See the [DisCoPy adapter guide](discopy-adapter.md).
+
+## Experimental Stoch namespace
+
+These APIs expose explicit assumptions and approximations. They are deliberately separated from the stable finite categorical API.
+
+### Density calculations
+
+- `DensityDistribution(log_density, name)` — a log-density relative to a caller-defined base measure.
+- `validate_normalized(distribution, integrator)` — check total mass under a supplied integrator.
+- `density_kl(first, second, integrator)` — density KL.
+- `density_renyi(first, second, alpha, integrator)` — finite-order density Rényi divergence.
+- `density_total_variation(first, second, integrator)` — integrated total variation.
+
+### Finite partitions
+
+- `partition_lower_bounds(levels, divergence)` — evaluate divergence on user-supplied finite coarse-grainings.
+- `PartitionDivergenceEstimate` — values, labels, largest observed lower bound, and monotonicity diagnostic.
+
+### Sampling estimates
+
+- `estimate_expectation(samples, statistic)` — sample mean, standard error, and normal interval.
+- `estimate_kl_from_samples(samples, first, second)` — estimate a log-density ratio expectation from samples drawn from the first distribution.
+- `MonteCarloEstimate` — point estimate and uncertainty metadata.
+
+See [Experimental Stoch backends](stoch-experimental.md) for assumptions and non-goals.
+
 ## Exceptions and numerical behavior
 
-Public constructors raise `ValueError` for incompatible spaces, invalid shapes, non-finite entries, negative probabilities, or failed normalization. See [Numerical conventions](conventions.md) for tolerance, support, and infinity handling.
+Public constructors raise `ValueError` for incompatible spaces, invalid shapes, non-finite entries, negative probabilities, or failed normalization. See [Numerical conventions](conventions.md) for tolerance, support, infinity handling, and experimental-backend assumptions.
