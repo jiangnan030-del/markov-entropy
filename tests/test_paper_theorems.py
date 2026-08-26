@@ -172,7 +172,8 @@ def test_discard_is_a_copy_counit_and_tensor_unit_is_numerically_strict():
     assert np.array_equal(right_counit.matrix, expected)
 
     channel = Channel(x, x, np.eye(len(x)))
-    assert np.array_equal(channel.tensor(identity(discard(x).codomain)).matrix, channel.matrix)
+    tensor_unit = channel.tensor(identity(discard(x).codomain))
+    assert np.array_equal(tensor_unit.matrix, channel.matrix)
 
 
 @settings(max_examples=30, deadline=None)
@@ -211,8 +212,11 @@ def test_conditional_entropy_is_expected_fibre_entropy(source_values, matrix):
         * entropy(Distribution(y, channel.matrix[:, index]), KL())
         for index in range(len(x))
     )
-    assert conditional_entropy(channel, source, KL()) == np.testing.assert_allclose(
-        conditional_entropy(channel, source, KL()), expected, atol=1e-10, rtol=1e-10
+    np.testing.assert_allclose(
+        conditional_entropy(channel, source, KL()),
+        expected,
+        atol=1e-10,
+        rtol=1e-10,
     )
 
 
