@@ -22,9 +22,11 @@ def unit_interval_integrator(points: int = 160):
     scaled_weights = weights / 2.0
 
     def integrate(function):
-        return float(
-            sum(weight * function(float(location)) for location, weight in zip(locations, scaled_weights))
+        terms = (
+            weight * function(float(location))
+            for location, weight in zip(locations, scaled_weights, strict=True)
         )
+        return float(sum(terms))
 
     return integrate
 
@@ -76,6 +78,8 @@ def test_partition_lower_bounds_and_monotonicity():
         partition_lower_bounds([], KL())
     with pytest.raises(ValueError):
         partition_lower_bounds([([0.5, 0.5], [1.0])], KL())
+    with pytest.raises(ValueError):
+        partition_lower_bounds([([[1.0]], [[1.0]])], KL())
 
 
 def test_sampling_estimates_include_uncertainty():

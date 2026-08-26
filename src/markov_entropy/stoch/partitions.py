@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 
+import numpy as np
 import numpy.typing as npt
 
 from ..distributions import Distribution
@@ -70,11 +71,13 @@ def partition_lower_bounds(
 
     values: list[float] = []
     for index, (first_masses, second_masses) in enumerate(level_list):
-        first_values = tuple(float(value) for value in first_masses)
-        second_values = tuple(float(value) for value in second_masses)
-        if len(first_values) != len(second_values):
+        first_values = np.asarray(first_masses, dtype=np.float64)
+        second_values = np.asarray(second_masses, dtype=np.float64)
+        if first_values.ndim != 1 or second_values.ndim != 1:
+            raise ValueError(f"partition level {index + 1} must contain vectors")
+        if first_values.shape != second_values.shape:
             raise ValueError(f"partition level {index + 1} is not aligned")
-        space = FiniteSpace(range(len(first_values)))
+        space = FiniteSpace(range(first_values.size))
         first = Distribution(space, first_values)
         second = Distribution(space, second_values)
         values.append(distribution_divergence(first, second, divergence))
