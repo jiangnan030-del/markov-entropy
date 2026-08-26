@@ -5,7 +5,7 @@ type: software
 authors:
   - given-names: jiangnan
 repository-code: "https://github.com/jiangnan030-del/markov-entropy"
-version: 0.2.0
+version: 0.3.0
 date-released: 2026-08-26
 license: MIT
 references:
